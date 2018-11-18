@@ -1,18 +1,56 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+
+      <div class="jumbotron">
+        <h1 class="display-4">welcome to wild bear</h1>
+        <p class="lead">food, stuff, and more</p>
+        <hr class="my-4">
+        <p>we sell some things here and we would like to sell them to you</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      </div>
+
+      <div class="row">
+        <div v-for="product in products" class="col-md-4 mb-2">
+          <div class="card">
+            <img class="card-img-top" v-bind:src="product.image_url" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.description }}</p>
+              <a href="#" class="btn btn-primary">get it</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
+<style>
+  
+</style>
+
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
+var axios = require("axios");
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      products: []
+    };
+  },
+  created: function() {
+    axios.get("http://localhost:3000/api/products").then(
+      function(response) {
+        console.log(response.data);
+        this.products = response.data;
+      }.bind(this)
+    );
+  },
+  methods: {},
+  computed: {}
+};
 </script>
