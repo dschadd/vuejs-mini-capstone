@@ -10,6 +10,9 @@
         <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
       </div>
 
+      <h1>Add new product</h1>
+      <button v-on:click="createRecipe()" class="btn btn-primary">Create new product</button>
+
       <div class="row">
         <div v-for="product in products" class="col-md-4 mb-2">
           <div class="card">
@@ -50,7 +53,23 @@ export default {
       }.bind(this)
     );
   },
-  methods: {},
+  methods: {
+    createRecipe: function() {
+      console.log("createRecipe");
+      var params = {
+        name: "dog",
+        price: 2,
+        description: "man's best friend",
+        supplier_id: 2
+      };
+      axios.post("http://localhost:3000/api/products", params).then(
+        function(response) {
+          console.log(response);
+          this.products.push(response.data);
+        }.bind(this)
+      );
+    }
+  },
   computed: {}
 };
 </script>
