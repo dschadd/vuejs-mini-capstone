@@ -1,26 +1,36 @@
 <template>
   <div class="home">
     <div class="container">
-
       <div class="jumbotron">
         <h1 class="display-4">welcome to wild bear</h1>
         <p class="lead">food, stuff, and more</p>
-        <hr class="my-4">
+        <hr class="my-4" />
         <p>we sell some things here and we would like to sell them to you</p>
         <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
       </div>
 
       <h1>Add new product</h1>
-      <button v-on:click="createRecipe()" class="btn btn-primary">Create new product</button>
+      Name <input v-model="newProductName" type="text" /> Price
+      <input v-model="newProductPrice" type="text" /> Description
+      <input v-model="newProductDescription" type="text" /> Supplier_ID
+      <input v-model="newProductSupplierID" type="text" />
+
+      <button v-on:click="createProduct();" class="btn btn-primary">
+        Create new product
+      </button>
 
       <div class="row">
         <div v-for="product in products" class="col-md-4 mb-2">
           <div class="card">
-            <img class="card-img-top" v-bind:src="product.image_url" alt="Card image cap">
+            <img
+              class="card-img-top"
+              v-bind:src="product.images[0].image_url"
+              alt="Card image cap"
+            />
             <div class="card-body">
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text">{{ product.description }}</p>
-              <a href="#" class="btn btn-primary">get it</a>
+              <a v-bind:href="`/#/products/${product.id}`" class="btn btn-primary">get it</a>
             </div>
           </div>
         </div>
@@ -29,9 +39,7 @@
   </div>
 </template>
 
-<style>
-  
-</style>
+<style></style>
 
 <script>
 // @ is an alias to /src
@@ -42,7 +50,11 @@ export default {
   data: function() {
     return {
       message: "Welcome to Vue.js!",
-      products: []
+      products: [],
+      newProductName: "",
+      newProductPrice: "",
+      newProductDescription: "",
+      newProductSupplierID: ""
     };
   },
   created: function() {
@@ -54,18 +66,22 @@ export default {
     );
   },
   methods: {
-    createRecipe: function() {
-      console.log("createRecipe");
+    createProduct: function() {
+      console.log("createProduct");
       var params = {
-        name: "dog",
-        price: 2,
-        description: "man's best friend",
-        supplier_id: 2
+        name: this.newProductName,
+        price: this.newProductPrice,
+        description: this.newProductDescription,
+        supplier_id: this.newProductSupplierID
       };
       axios.post("http://localhost:3000/api/products", params).then(
         function(response) {
           console.log(response);
           this.products.push(response.data);
+          this.newProductName = "";
+          this.newProductPrice = "";
+          this.newProductDescription = "";
+          this.newProductSupplierID = "";
         }.bind(this)
       );
     }

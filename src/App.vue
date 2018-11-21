@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #556B2F;">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +27,13 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
+            <a class="nav-link" href="/#/signup">Signup</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/#/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/#/logout">Logout</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
