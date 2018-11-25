@@ -8,19 +8,24 @@
         <p>we sell some things here and we would like to sell them to you</p>
         <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
       </div>
-
+      
+      <ul>
+        <li v-for="error in errors" class="text-danger">{{error}}</li>
+      </ul>
       <h1>Add new product</h1>
       Name <input v-model="newProductName" type="text" /> Price
       <input v-model="newProductPrice" type="text" /> Description
       <input v-model="newProductDescription" type="text" /> Supplier_ID
       <input v-model="newProductSupplierID" type="text" />
+      <button v-on:click="createProduct();" class="btn btn-primary"> Create new product </button>
 
-      <button v-on:click="createProduct();" class="btn btn-primary">
-        Create new product
-      </button>
-
+      <h1>Search Products</h1>
+      <input type="text" v-model="searchFilter" list="names">
+      <datalist id="names">
+        <option v-for="recipe in recipes">{{ recipe.title }}</option>
+      </datalist>
       <div class="row">
-        <div v-for="product in products" class="col-md-4 mb-2">
+        <div v-for="product in filterBy(products, searchFilter, 'name', 'description')" class="col-md-4 mb-2">
           <div class="card">
             <img
               class="card-img-top"
@@ -54,7 +59,8 @@ export default {
       newProductName: "",
       newProductPrice: "",
       newProductDescription: "",
-      newProductSupplierID: ""
+      newProductSupplierID: "",
+      searchFilter: ""
     };
   },
   created: function() {
